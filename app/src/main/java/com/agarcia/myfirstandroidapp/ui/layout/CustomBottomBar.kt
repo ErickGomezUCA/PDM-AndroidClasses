@@ -1,35 +1,13 @@
 package com.agarcia.myfirstandroidapp.ui.layout
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.filled.Tv
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-
-data class NavItem(val label: String, val icon: ImageVector, val route: String)
 
 @Composable
-fun CustomBottomBar() {
-  val navItems = listOf(
-    NavItem("Inicio", Icons.Filled.Home, "home"),
-    NavItem("Mis Favoritas", Icons.Filled.Favorite, "favorite"),
-    NavItem("Ya vistas", Icons.Filled.Tv, "shoppingCart")
-  )
-
-  var selectedItem by rememberSaveable { mutableStateOf("home") }
-
+fun CustomBottomBar(navItems: List<NavItem>,  selectedItem: String = "nowplaying", onItemSelected: (String) -> Unit) {
   NavigationBar(
     //containerColor = Color.Green,
     //contentColor = Color.Black,
@@ -40,7 +18,7 @@ fun CustomBottomBar() {
         label = { Text(item.label) },
         icon = { Icon(imageVector = item.icon, contentDescription = item.label) },
         selected = selectedItem == item.route,
-        onClick = { selectedItem = item.route },
+        onClick = { onItemSelected(item.route) },
 //        colors = NavigationBarItemDefaults.colors(
 //          selectedIconColor = Color.Black,
 //          unselectedIconColor = Color.Gray,

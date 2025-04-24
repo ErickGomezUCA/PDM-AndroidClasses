@@ -14,7 +14,9 @@ import com.agarcia.myfirstandroidapp.data.dummy.movies
 import com.agarcia.myfirstandroidapp.ui.components.MovieItem
 
 @Composable
-fun MovieListScreen(){
+fun MovieListScreen(
+  onMovieClick : (Int) -> Unit = {}
+){
   val movies = movies
   LazyColumn(
     modifier = Modifier
@@ -22,7 +24,7 @@ fun MovieListScreen(){
       .padding(16.dp)
   ) {
     items(movies) { movie ->
-      MovieItem(movie = movie)
+      MovieItem(movie = movie, onMovieClick = onMovieClick)
       Spacer(modifier = Modifier.height(16.dp))
     }
   }

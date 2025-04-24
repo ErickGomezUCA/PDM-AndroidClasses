@@ -9,26 +9,34 @@ import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomTopBar(
   title: String = "¡Qué Peli!",
+  showBackButton: Boolean = false,
+  onBackClick: () -> Unit = {}
 ) {
   TopAppBar(
     title = { Text(text = title) },
     navigationIcon = {
-      IconButton(onClick = {}) {
-        Icon(
-          imageVector = Icons.Filled.Menu,
-          contentDescription = "Menu",
-        )
+      if (showBackButton) {
+        IconButton(onClick = onBackClick) {
+          Icon(
+            imageVector = Icons.Filled.ArrowBackIosNew,
+            contentDescription = "Volver"
+          )
+        }
+      } else {
+        IconButton(onClick = {  }) {
+          Icon(
+            imageVector = Icons.Filled.Menu,
+            contentDescription = "Menú"
+          )
+        }
       }
     },
     actions = {

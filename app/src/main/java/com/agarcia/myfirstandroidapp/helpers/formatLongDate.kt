@@ -6,6 +6,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
+
 fun formatLongDate(originalDate: String): String {
   return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
     // API 26 o superior: usamos LocalDate y DateTimeFormatter

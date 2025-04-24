@@ -1,5 +1,6 @@
 package com.agarcia.myfirstandroidapp.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,11 +24,11 @@ import com.agarcia.myfirstandroidapp.data.model.Movie
 import com.agarcia.myfirstandroidapp.helpers.formatLongDate
 
 @Composable
-fun MovieItem(movie: Movie) {
+fun MovieItem(movie: Movie, onMovieClick: (Int) -> Unit) {
   Card(
     shape = RoundedCornerShape(12.dp),
     elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-    modifier = Modifier.fillMaxWidth()
+    modifier = Modifier.fillMaxWidth().clickable { onMovieClick(movie.id) }
   ) {
     Row(modifier = Modifier.padding(16.dp)) {
       AsyncImage(
