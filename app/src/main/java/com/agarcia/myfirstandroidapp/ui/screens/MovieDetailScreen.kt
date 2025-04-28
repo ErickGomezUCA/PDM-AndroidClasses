@@ -28,13 +28,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.agarcia.myfirstandroidapp.data.dummy.movies
+import com.agarcia.myfirstandroidapp.data.dummy.dummyMovies
 import com.agarcia.myfirstandroidapp.helpers.formatLongDate
 
 @Composable
 fun MovieDetailScreen(movieId: Int) {
   val scrollState = rememberScrollState()
-  val movie = movies.firstOrNull { it.id == movieId }
+  val movie = dummyMovies.firstOrNull { it.id == movieId }
 
   if (movie == null) {
     Box(

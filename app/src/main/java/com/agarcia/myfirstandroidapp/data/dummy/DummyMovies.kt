@@ -2,7 +2,7 @@ package com.agarcia.myfirstandroidapp.data.dummy
 
 import com.agarcia.myfirstandroidapp.data.model.Movie
 
-val movies = listOf(
+val dummyMovies = listOf(
   Movie(
     id = 950387,
     title = "Una película de Minecraft",
