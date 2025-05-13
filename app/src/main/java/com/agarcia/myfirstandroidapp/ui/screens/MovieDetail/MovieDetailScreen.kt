@@ -1,4 +1,4 @@
-package com.agarcia.myfirstandroidapp.ui.screens
+package com.agarcia.myfirstandroidapp.ui.screens.MovieDetail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,14 +26,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
-import com.agarcia.myfirstandroidapp.data.dummy.dummyMovies
 import com.agarcia.myfirstandroidapp.helpers.formatLongDate
 
 @Composable
-fun MovieDetailScreen(movieId: Int) {
+fun MovieDetailScreen(
+  movieId: Int,
+  viewModel: MovieDetailViewModel = viewModel()
+) {
   val scrollState = rememberScrollState()
-  val movie = dummyMovies.firstOrNull { it.id == movieId }
+  val movie = viewModel.getMovieById(movieId)
 
   if (movie == null) {
     Box(
