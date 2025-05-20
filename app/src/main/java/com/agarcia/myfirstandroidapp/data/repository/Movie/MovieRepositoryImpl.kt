@@ -7,7 +7,7 @@ import kotlinx.coroutines.delay
 class MovieRepositoryImpl:MovieRepository {
 
   override suspend fun getMovies(): List<Movie> {
-    delay(5000)
+    delay(200)
     return dummyMovies
   }
 }
