@@ -16,8 +16,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
+import com.agarcia.myfirstandroidapp.data.model.Review
 import com.agarcia.myfirstandroidapp.ui.components.reviews.ReviewCard
+import com.agarcia.myfirstandroidapp.ui.components.reviews.ReviewDialog
 
 @Composable
 fun ReviewsScreen(
@@ -25,6 +30,10 @@ fun ReviewsScreen(
 ) {
     val reviews by viewModel.reviews.collectAsState()
     val loading by viewModel.loading.collectAsState()
+
+    // Dialog state
+    var showReviewDialog by remember { mutableStateOf(false) }
+    var reviewToEdit by remember { mutableStateOf<Review?>(null) }
 
     if (loading) {
         Box(
@@ -51,10 +60,39 @@ fun ReviewsScreen(
             items(reviews) { review ->
                 ReviewCard(
                     review = review,
-                    onEdit = { /* Handle review click */ },
-                    onDelete = {}
+                    onEdit = {
+                        reviewToEdit = review
+                        showReviewDialog = true
+                    },
+                    onDelete = {
+                        viewModel.deleteReview(review)
+                    },
+                    includeMovieDetails = true
                 )
             }
         }
+    }
+
+    // Show dialog when state is true
+    if (showReviewDialog) {
+        ReviewDialog(
+            movieId = reviewToEdit?.movieId!!,
+            existingReview = reviewToEdit,
+            onDismiss = {
+                showReviewDialog = false
+                reviewToEdit = null
+            },
+            onSubmit = { review ->
+                if (reviewToEdit != null) {
+                    // Update existing review
+                    viewModel.updateReview(review)
+                } else {
+                    // Add new review
+                    viewModel.addReview(review)
+                }
+                showReviewDialog = false
+                reviewToEdit = null
+            }
+        )
     }
 }

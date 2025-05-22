@@ -49,7 +49,8 @@ fun ReviewCard(
 ) {
     val movie = movieDetailViewModel.getMovieById(review.movieId)
 
-    Card (
+
+    Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
@@ -58,38 +59,40 @@ fun ReviewCard(
             containerColor = MaterialTheme.colorScheme.surface
         ),
     ) {
-        if (includeMovieDetails && movie != null) {
-
-            Row(modifier = Modifier.padding(16.dp)) {
-                AsyncImage(
-                    model=movie.posterUrl,
-                    contentDescription = movie.title,
-                    modifier = Modifier.height(120.dp).width(80.dp).clip(RoundedCornerShape(8.dp)),
-                )
-
-                Spacer(modifier = Modifier.width(16.dp))
-
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = movie.title,
-                        style = MaterialTheme.typography.titleMedium,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    Text(
-                        text = "Estreno: ${formatLongDate(movie.releaseDate)}",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.Gray
-                    )
-                }
-            }
-        }
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
+            if (includeMovieDetails && movie != null) {
+                Row(modifier = Modifier.padding(16.dp)) {
+                    AsyncImage(
+                        model = movie.posterUrl,
+                        contentDescription = movie.title,
+                        modifier = Modifier
+                            .height(120.dp)
+                            .width(80.dp)
+                            .clip(RoundedCornerShape(8.dp)),
+                    )
+
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = movie.title,
+                            style = MaterialTheme.typography.titleMedium,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        Text(
+                            text = "Estreno: ${formatLongDate(movie.releaseDate)}",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.Gray
+                        )
+                    }
+                }
+            }
+
             // Header with author and date
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -113,7 +116,10 @@ fun ReviewCard(
                     IconButton(
                         onClick = onDelete
                     ) {
-                        Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete Review")
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = "Delete Review"
+                        )
                     }
                 }
             }
