@@ -56,7 +56,7 @@ fun MovieDetailScreen(
     val scrollState = rememberScrollState()
     val movie = viewModel.getMovieById(movieId)
     val favoriteMovies = favoritesViewModel.favoriteMovies.collectAsState().value
-    val isFavorite = favoriteMovies.any { it.movieId == movie.id }
+    val isFavorite = favoriteMovies.any { it.movieId == movie?.id }
 
     // Dialog state
     var showReviewDialog by remember { mutableStateOf(false) }

@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class MovieDetailViewModel: ViewModel() {
   private val _movies = MutableStateFlow<List<Movie>>(dummyMovies)
 
-  fun getMovieById(id: Int): Movie {
-    return _movies.value.first { it.id == id }
+  fun getMovieById(id: Int): Movie? {
+    return _movies.value.firstOrNull { it.id == id }
   }
 }

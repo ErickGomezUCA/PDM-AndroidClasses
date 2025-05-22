@@ -47,6 +47,8 @@ fun ReviewCard(
     includeMovieDetails: Boolean = false,
     movieDetailViewModel: MovieDetailViewModel = viewModel(),
 ) {
+    val movie = movieDetailViewModel.getMovieById(review.movieId)
+
     Card (
         modifier = modifier
             .fillMaxWidth()
@@ -56,8 +58,7 @@ fun ReviewCard(
             containerColor = MaterialTheme.colorScheme.surface
         ),
     ) {
-        if (includeMovieDetails) {
-            val movie = movieDetailViewModel.getMovieById(review.movieId)
+        if (includeMovieDetails && movie != null) {
 
             Row(modifier = Modifier.padding(16.dp)) {
                 AsyncImage(
