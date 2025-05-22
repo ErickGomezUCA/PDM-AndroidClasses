@@ -7,9 +7,10 @@ import androidx.room.RoomDatabase
 import com.agarcia.myfirstandroidapp.data.database.dao.FavoriteMovieDao
 import com.agarcia.myfirstandroidapp.data.database.dao.ReviewDao
 import com.agarcia.myfirstandroidapp.data.database.entities.FavoriteMovieEntity
+import com.agarcia.myfirstandroidapp.data.database.entities.ReviewEntity
 
 @Database(
-  entities = [FavoriteMovieEntity::class],
+  entities = [FavoriteMovieEntity::class, ReviewEntity::class],
   version = 1,
   exportSchema = false
 )

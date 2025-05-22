@@ -1,0 +1,124 @@
+package com.agarcia.myfirstandroidapp.ui.components.reviews
+
+import androidx.compose.runtime.Composable
+import com.agarcia.myfirstandroidapp.data.model.Review
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.StarHalf
+import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
+@Composable
+fun ReviewCard(
+    review: Review,
+    onReviewClick: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Card (
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            // Header with author and date
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = review.author,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Rating with stars
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                repeat(5) { index ->
+                    Icon(
+                        imageVector = if (index < review.rating.toInt()) {
+                            Icons.Filled.Star
+                        } else if (index < review.rating && review.rating % 1 != 0.0) {
+                            Icons.Filled.StarHalf
+                        } else {
+                            Icons.Outlined.Star
+                        },
+                        contentDescription = null,
+                        tint = Color(0xFFFFD700), // Gold color
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Text(
+                    text = "${review.rating}/5.0",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Review description
+            Text(
+                text = review.description,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                lineHeight = 20.sp
+            )
+        }
+    }
+}
+
+// Preview function to see how it looks
+@Preview(showBackground = true)
+@Composable
+fun ReviewCardPreview() {
+    MaterialTheme {
+        ReviewCard(
+            review = Review(
+                id = 1,
+                author = "John Doe",
+                rating = 4.5,
+                description = "This movie was absolutely fantastic! The storyline was engaging, the acting was superb, and the cinematography was breathtaking. I would definitely recommend this to anyone looking for a great entertainment experience.",
+                movieId = 123
+            ),
+            onReviewClick = {}
+        )
+    }
+}

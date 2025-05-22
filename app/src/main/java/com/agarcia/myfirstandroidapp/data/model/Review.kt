@@ -1,14 +1,12 @@
 package com.agarcia.myfirstandroidapp.data.model
 
 import com.agarcia.myfirstandroidapp.data.database.entities.ReviewEntity
-import java.util.Date
 
 data class Review (
     val id: Int,
     val author: String,
     val rating: Double,
     val description: String,
-    val date: Date,
     val movieId: Int
 )
 
@@ -18,7 +16,6 @@ fun Review.toDatabase(): ReviewEntity {
         author = author,
         rating = rating,
         description = description,
-        date = date,
         movieId = movieId
     )
 }

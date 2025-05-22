@@ -1,6 +1,5 @@
 package com.agarcia.myfirstandroidapp.ui.layout
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,7 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import com.agarcia.myfirstandroidapp.ui.navigations.MainNavigation
 import com.agarcia.myfirstandroidapp.ui.navigations.MovieListScreenNavigation
 import com.agarcia.myfirstandroidapp.ui.navigations.MyFavoritesScreenNavigation
-import com.agarcia.myfirstandroidapp.ui.navigations.UpCommingScreenNavigation
+import com.agarcia.myfirstandroidapp.ui.navigations.ReviewsScreenNavigation
 import kotlinx.coroutines.launch
 
 const val MovieListScreenNavigationId = "com.agarcia.myfirstandroidapp.ui.navigations.MovieDetailScreenNavigation/{id}"
@@ -73,7 +72,7 @@ fun CustomScaffold () {
     when (currentItem) {
       "nowplaying" -> navController.navigate(MovieListScreenNavigation)
       "favorites" -> navController.navigate(MyFavoritesScreenNavigation)
-      "upcomming" -> navController.navigate(UpCommingScreenNavigation)
+      "upcomming" -> navController.navigate(ReviewsScreenNavigation)
       else -> navController.navigate(MovieListScreenNavigation)
     }
   }

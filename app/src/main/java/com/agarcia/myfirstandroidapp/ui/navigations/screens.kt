@@ -9,7 +9,7 @@ object MovieListScreenNavigation
 object MyFavoritesScreenNavigation
 
 @Serializable
-object UpCommingScreenNavigation
+object ReviewsScreenNavigation
 
 @Serializable
 data class MovieDetailScreenNavigation(val id: Int)
