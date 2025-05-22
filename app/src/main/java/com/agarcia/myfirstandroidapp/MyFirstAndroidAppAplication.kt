@@ -24,5 +24,6 @@ class MyFirstAndroidAppAplication:Application() {
 
         // val userPreferenceRepository = appProvider.provideUserPreferenceRepository()
         val favoriteMovieRepository = appProvider.provideFavoriteMovieRepository()
+        val repositoryRepository = appProvider.provideReviewRepository()
     }
 }
