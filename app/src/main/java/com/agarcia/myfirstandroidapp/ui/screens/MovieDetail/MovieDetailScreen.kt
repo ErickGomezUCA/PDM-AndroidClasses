@@ -24,11 +24,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,6 +42,7 @@ import coil3.compose.AsyncImage
 import com.agarcia.myfirstandroidapp.data.model.Review
 import com.agarcia.myfirstandroidapp.helpers.formatLongDate
 import com.agarcia.myfirstandroidapp.ui.components.reviews.ReviewCard
+import com.agarcia.myfirstandroidapp.ui.components.reviews.ReviewDialog
 import com.agarcia.myfirstandroidapp.ui.screens.Favorites.FavoritesViewModel
 import com.agarcia.myfirstandroidapp.ui.screens.Reviews.ReviewViewModel
 
@@ -56,6 +57,10 @@ fun MovieDetailScreen(
     val movie = viewModel.getMovieById(movieId)
     val favoriteMovies = favoritesViewModel.favoriteMovies.collectAsState().value
     val isFavorite = favoriteMovies.any { it.movieId == movie.id }
+
+    // Dialog state
+    var showReviewDialog by remember { mutableStateOf(false) }
+    var reviewToEdit by remember { mutableStateOf<Review?>(null) }
 
     if (movie == null) {
         Box(
@@ -174,15 +179,8 @@ fun MovieDetailScreen(
             Row(modifier = Modifier.fillMaxWidth()) {
                 Button(
                     onClick = {
-                        reviewViewModel.addReview(
-                            review = Review(
-                                id = 1,
-                                author = "John Doe",
-                                rating = 4.5,
-                                description = "This movie was absolutely fantastic! The storyline was engaging, the acting was superb, and the cinematography was breathtaking. I would definitely recommend this to anyone looking for a great entertainment experience.",
-                                movieId = 123
-                            )
-                        )
+                        reviewToEdit = null // Clear any existing review
+                        showReviewDialog = true
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -194,10 +192,42 @@ fun MovieDetailScreen(
                 Text(text = "No hay reseñas disponibles")
             } else {
                 reviews.forEach { review ->
-                    ReviewCard(review = review, onReviewClick = {})
+                    ReviewCard(
+                        review = review,
+                        onEdit = {
+                            reviewToEdit = review
+                            showReviewDialog = true
+                        },
+                        onDelete = {
+                            reviewViewModel.deleteReview(review)
+                        }
+                    )
                 }
             }
         }
+    }
+
+    // Show dialog when state is true
+    if (showReviewDialog) {
+        ReviewDialog(
+            movieId = movieId,
+            existingReview = reviewToEdit,
+            onDismiss = {
+                showReviewDialog = false
+                reviewToEdit = null
+            },
+            onSubmit = { review ->
+                if (reviewToEdit != null) {
+                    // Update existing review
+                    reviewViewModel.updateReview(review)
+                } else {
+                    // Add new review
+                    reviewViewModel.addReview(review)
+                }
+                showReviewDialog = false
+                reviewToEdit = null
+            }
+        )
     }
 }
 

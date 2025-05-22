@@ -12,12 +12,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarHalf
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
@@ -31,7 +34,8 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun ReviewCard(
     review: Review,
-    onReviewClick: (Int) -> Unit,
+    onEdit: () -> Unit,
+    onDelete: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card (
@@ -41,7 +45,7 @@ fun ReviewCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
-        )
+        ),
     ) {
         Column(
             modifier = Modifier
@@ -60,6 +64,20 @@ fun ReviewCard(
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface
                 )
+
+                Row {
+                    IconButton(
+                        onClick = onEdit
+                    ) {
+                        Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Review")
+                    }
+
+                    IconButton(
+                        onClick = onDelete
+                    ) {
+                        Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete Review")
+                    }
+                }
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -118,7 +136,8 @@ fun ReviewCardPreview() {
                 description = "This movie was absolutely fantastic! The storyline was engaging, the acting was superb, and the cinematography was breathtaking. I would definitely recommend this to anyone looking for a great entertainment experience.",
                 movieId = 123
             ),
-            onReviewClick = {}
+            onEdit = {},
+            onDelete = {}
         )
     }
 }
