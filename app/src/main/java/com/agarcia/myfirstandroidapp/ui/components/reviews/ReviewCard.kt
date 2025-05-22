@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
@@ -25,18 +26,26 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil3.compose.AsyncImage
+import com.agarcia.myfirstandroidapp.helpers.formatLongDate
+import com.agarcia.myfirstandroidapp.ui.screens.MovieDetail.MovieDetailViewModel
 
 @Composable
 fun ReviewCard(
     review: Review,
     onEdit: () -> Unit,
     onDelete: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    includeMovieDetails: Boolean = false,
+    movieDetailViewModel: MovieDetailViewModel = viewModel(),
 ) {
     Card (
         modifier = modifier
@@ -47,6 +56,34 @@ fun ReviewCard(
             containerColor = MaterialTheme.colorScheme.surface
         ),
     ) {
+        if (includeMovieDetails) {
+            val movie = movieDetailViewModel.getMovieById(review.movieId)
+
+            Row(modifier = Modifier.padding(16.dp)) {
+                AsyncImage(
+                    model=movie.posterUrl,
+                    contentDescription = movie.title,
+                    modifier = Modifier.height(120.dp).width(80.dp).clip(RoundedCornerShape(8.dp)),
+                )
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = movie.title,
+                        style = MaterialTheme.typography.titleMedium,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Text(
+                        text = "Estreno: ${formatLongDate(movie.releaseDate)}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Color.Gray
+                    )
+                }
+            }
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
