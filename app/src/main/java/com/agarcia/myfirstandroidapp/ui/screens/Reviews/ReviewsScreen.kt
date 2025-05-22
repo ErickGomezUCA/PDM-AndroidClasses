@@ -45,12 +45,25 @@ fun ReviewsScreen(
         return
     }
 
+    if (reviews.isEmpty()) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "No hay reseñas disponibles",
+                style = MaterialTheme.typography.titleLarge
+            )
+        }
+        return
+    }
+
     Column(modifier = Modifier
       .fillMaxSize()
       .padding(16.dp, 0.dp, 16.dp, 16.dp)) {
         Row {
             Text(
-                text = "Reviews",
+                text = "Reseñas",
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(bottom = 16.dp)
             )

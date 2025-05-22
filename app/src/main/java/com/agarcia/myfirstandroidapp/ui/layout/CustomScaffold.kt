@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Tv
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -48,7 +49,7 @@ fun CustomScaffold () {
   val navItems = listOf(
     NavItem("Tendencias", Icons.Filled.Home, "nowplaying"),
     NavItem("Favorites", Icons.Filled.Favorite, "favorites"),
-    NavItem("Up comming", Icons.Filled.Tv, "upcomming")
+    NavItem("Reseñas", Icons.Filled.Star, "reviews")
   )
 
   fun onFloatingButtonClick(text:String) {
@@ -66,13 +67,13 @@ fun CustomScaffold () {
     title = when (currentItem) {
       "nowplaying" -> "Tendencias"
       "favorites" -> "Mis Favoritas"
-      "upcomming" -> "Próximamente"
+      "reviews" -> "Reseñas"
       else -> "Inicio"
     }
     when (currentItem) {
       "nowplaying" -> navController.navigate(MovieListScreenNavigation)
       "favorites" -> navController.navigate(MyFavoritesScreenNavigation)
-      "upcomming" -> navController.navigate(ReviewsScreenNavigation)
+      "reviews" -> navController.navigate(ReviewsScreenNavigation)
       else -> navController.navigate(MovieListScreenNavigation)
     }
   }
