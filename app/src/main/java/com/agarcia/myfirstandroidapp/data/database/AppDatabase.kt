@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.agarcia.myfirstandroidapp.data.database.dao.FavoriteMovieDao
+import com.agarcia.myfirstandroidapp.data.database.dao.ReviewDao
 import com.agarcia.myfirstandroidapp.data.database.entities.FavoriteMovieEntity
 
 @Database(
@@ -14,6 +15,7 @@ import com.agarcia.myfirstandroidapp.data.database.entities.FavoriteMovieEntity
 )
 abstract class AppDatabase: RoomDatabase() {
   abstract fun favoriteMovieDao(): FavoriteMovieDao
+  abstract fun reviewDao(): ReviewDao
 
   companion object {
     @Volatile
