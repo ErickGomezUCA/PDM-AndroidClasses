@@ -18,3 +18,22 @@ fun FavoriteMovie.toDatabase(): FavoriteMovieEntity {
         posterUrl = posterUrl
     )
 }
+
+fun FavoriteMovie.toMovie(): Movie {
+    return Movie(
+        id = movieId,
+        title = title,
+        originalTitle = title,
+        originalLanguage = "en",
+        overview = "",
+        releaseDate = "",
+        adult = false,
+        genreIds = emptyList(),
+        popularity = 0.0,
+        voteAverage = 0.0,
+        voteCount = 0,
+        video = false,
+        backdropUrl = "",
+        posterUrl = posterUrl
+    )
+}

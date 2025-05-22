@@ -1,61 +1,45 @@
 package com.agarcia.myfirstandroidapp.ui.screens.Favorites
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.List
-import androidx.compose.material.icons.filled.GridView
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.agarcia.myfirstandroidapp.data.model.FavoriteMovie
-import com.agarcia.myfirstandroidapp.data.model.Movie
-import com.agarcia.myfirstandroidapp.ui.components.FavoriteMovieItem
-import com.agarcia.myfirstandroidapp.ui.components.FavoriteMoviePoster
-import com.agarcia.myfirstandroidapp.ui.components.MovieItem
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.agarcia.myfirstandroidapp.ui.components.MoviePoster
-import com.agarcia.myfirstandroidapp.ui.screens.MovieList.MovieListScreen
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import com.agarcia.myfirstandroidapp.data.model.toMovie
+
 
 @Composable
 fun Favorites(
-  onMovieClick : (Int) -> Unit = {},
-  viewModel: FavoritesViewModel = viewModel(factory = FavoritesViewModel.Factory)
+  favoritesViewModel: FavoritesViewModel = viewModel(factory = FavoritesViewModel.Factory)
 ) {
-  val favoriteMovies by viewModel.favoriteMovies.collectAsState()
-  val loading by viewModel.loading.collectAsState()
-  val isLinearLayout by viewModel.isLinearLayout.collectAsState()
+  val favoriteMovies by favoritesViewModel.favoriteMovies.collectAsState(emptyList())
 
-  if (loading) {
-    Box(
-      modifier = Modifier.fillMaxSize(),
-      contentAlignment = Alignment.Center
-    ) {
-      CircularProgressIndicator()
+  LazyVerticalGrid(
+    columns = GridCells.Fixed(3),
+    contentPadding = PaddingValues(0.dp),
+    verticalArrangement = Arrangement.spacedBy(8.dp),
+    horizontalArrangement = Arrangement.spacedBy(8.dp),
+    modifier = Modifier.fillMaxSize().padding(16.dp)
+  ) {
+    items(favoriteMovies) { movie ->
+      val isFavorite by favoritesViewModel.isFavorite(movie.id).collectAsState(false)
+      MoviePoster(
+        movie = movie.toMovie(),
+        isFavorite = isFavorite,
+        onMovieClick = {},
+        onFavoriteClick = { favoritesViewModel.toggleFavorite(movie) }
+
+      )
     }
-
-    return
   }
 
   Column (

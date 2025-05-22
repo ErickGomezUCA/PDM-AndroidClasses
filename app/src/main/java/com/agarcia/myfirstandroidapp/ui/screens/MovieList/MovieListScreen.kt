@@ -80,7 +80,7 @@ fun MovieListScreen(
     if (isLinearLayout) {
       MoviesLinearLayout(movies, onMovieClick)
     } else {
-      MoviesGridLayout(movies, onMovieClick)
+      MoviesGridLayout(movies, onMovieClick, viewModel)
     }
   }
 }
@@ -96,7 +96,7 @@ fun MoviesLinearLayout (movies: List<Movie>, onMovieClick: (Int) -> Unit) {
 }
 
 @Composable
-fun MoviesGridLayout (movies: List<Movie>, onMovieClick: (Int) -> Unit) {
+fun MoviesGridLayout (movies: List<Movie>, onMovieClick: (Int) -> Unit, viewModel: MovieListViewModel) {
   LazyVerticalGrid(
     columns = GridCells.Fixed(3),
     contentPadding = PaddingValues(0.dp),
@@ -104,7 +104,13 @@ fun MoviesGridLayout (movies: List<Movie>, onMovieClick: (Int) -> Unit) {
     horizontalArrangement = Arrangement.spacedBy(8.dp)
   ) {
     items(movies) { movie ->
-      MoviePoster(movie = movie, onMovieClick = onMovieClick)
+      val isFavorite by viewModel.isFavoriteMovie(movie.id).collectAsState(initial = false)
+      MoviePoster(
+        movie = movie,
+        onMovieClick = onMovieClick,
+        isFavorite = isFavorite,
+        onFavoriteClick = { viewModel.toggleFavoriteMovie(movie) }
+      )
     }
   }
 }

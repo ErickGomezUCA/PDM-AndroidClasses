@@ -16,3 +16,12 @@ data class Movie(
   val backdropUrl: String,
   val posterUrl: String
 )
+
+fun Movie.toFavoriteMovie(): FavoriteMovie {
+  return FavoriteMovie(
+    movieId = id,
+    title = title,
+    posterUrl = posterUrl,
+    id = id
+  )
+}
