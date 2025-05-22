@@ -1,4 +1,4 @@
-package com.agarcia.myfirstandroidapp.ui.screens.UpComming
+package com.agarcia.myfirstandroidapp.ui.screens.Reviews
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import com.agarcia.myfirstandroidapp.ui.screens.Favorites.Favorites
 import com.agarcia.myfirstandroidapp.ui.screens.MovieDetail.MovieDetailScreen
 import com.agarcia.myfirstandroidapp.ui.screens.MovieList.MovieListScreen
-import com.agarcia.myfirstandroidapp.ui.screens.UpComming.UpComming
+import com.agarcia.myfirstandroidapp.ui.screens.Reviews.UpComming
 
 @Composable
 fun MainNavigation(navController: NavHostController) {
